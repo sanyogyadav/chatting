@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const path = require('path');
 const http = require('http');
 const express = require('express');
@@ -11,6 +12,24 @@ const io = socketio(server);
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+var databaseUrl = 'mongodb://localhost:27017/chat'
+
+mongoose.connect(databaseUrl, {	
+    useNewUrlParser: true,
+	useUnifiedTopology: true
+}).then(() => {
+    console.log("Successfully connected to the database");    
+}).catch(err => {
+    console.log('Could not connect to the database. Exiting now...', err);
+    process.exit();
+});
+
+var Message = mongoose.model('Message',{ username : String, text : String})
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}))
 
 const botName = 'Talk Bot';
 
@@ -39,6 +58,7 @@ io.on('connection', socket => {
         const user = getCurrentUser(socket.id);
         io.to(user.room).emit('message', formatMessage(user.username, msg));
     });
+    
     //Runs when client disconnects
     socket.on('disconnect', () => {
         const user = userLeave(socket.id);
