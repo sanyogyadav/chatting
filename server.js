@@ -25,8 +25,6 @@ mongoose.connect(databaseUrl, {
     process.exit();
 });
 
-var Message = mongoose.model('Message',{ username : String, text : String})
-
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
