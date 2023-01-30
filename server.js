@@ -13,7 +13,7 @@ const io = socketio(server);
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-var databaseUrl = 'mongodb://localhost:27017/chat'
+var databaseUrl = 'mongodb://localhost:27017/Online-Chat'
 
 mongoose.connect(databaseUrl, {	
     useNewUrlParser: true,

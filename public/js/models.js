@@ -10,7 +10,18 @@ const ChatSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  // time: moment().format('hh:mm a')
+  // time: { 
+  //   type: Date,
+  //   default: Date.now 
+  // },
+  msg_date: {
+    type: String,
+    default: "",
+  },
+  msg_time: {
+    type: String,
+    default: ""
+  },
 });
 
 const UserMessage = mongoose.model("UserMessage", ChatSchema);
